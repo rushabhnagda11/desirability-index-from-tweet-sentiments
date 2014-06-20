@@ -80,7 +80,7 @@ function search_for_a_term($bearer_token, $query, $result_type='mixed', $count='
 	if($result_type!='mixed'){$formed_url = $formed_url.'&result_type='.$result_type;} 
 	if($count!='15'){$formed_url = $formed_url.'&count='.$count;} 
 	$formed_url = $formed_url.'&include_entities=true';
-	$formed_url = $formed_url.'&lang=eu';
+	$formed_url = $formed_url.'&lang=en';
 	$headers = array( 
 		"GET /1.1/search/tweets.json".$formed_url." HTTP/1.1", 
 		"Host: api.twitter.com", 
@@ -109,9 +109,9 @@ function getAffinityLike($query) {
     //echo "result 2 = ".print_r($result2,1);
     return $result2;
 }
-
 $bearer_token = get_bearer_token(); // get the bearer token
 $product = $argv[1];
-print search_for_a_term($bearer_token, $product, "recent",5000); 
-print getAffinityLike($argv[1]);
+print search_for_a_term($bearer_token, $product, "recent",5000);
+invalidate_bearer_token(); 
+//print getAffinityLike($argv[1]);
 ?>
