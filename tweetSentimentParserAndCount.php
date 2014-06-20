@@ -1,9 +1,9 @@
 <?php
 $product = urlencode(trim($argv[1]));
 $file = $argv[2];
-$cmd = "curl --data-binary @".$file." http://www.sentiment140.com/api/bulkClassify?query=".$product;
+$cmd = "curl --data-binary @".$file." http://www.sentiment140.com/api/bulkClassify?query=\"".$product."\"";
 $result2 = array();
-echo $cmd;
+#echo $cmd;
 exec($cmd,$result2);
 $sentiments = array();
 
@@ -18,8 +18,14 @@ foreach($result2 as $result) {
     }
     
 }
-echo print_r($sentiments,1);
+#echo print_r($sentiments,1);
+if(!isset($sentiments['"4"'])) {
+    $sentiments['"4"'] = 0;
+}
+if(!isset($sentiments['"0"'])) {
+    $sentiments['"0"'] = 0;
+}
 $netPositiveSentiment = $sentiments['"4"'] - $sentiments['"0"'];
-echo $product."\t".$netPositiveSentiment/count($result2);
+echo $argv[1]."\t".$sentiments['"4"']."\t". $sentiments['"0"']."\t".$netPositiveSentiment/count($result2);
 ?>
 
