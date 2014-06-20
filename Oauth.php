@@ -76,10 +76,11 @@ function invalidate_bearer_token($bearer_token){
 function search_for_a_term($bearer_token, $query, $result_type='mixed', $count='15'){
 	$url = "https://api.twitter.com/1.1/search/tweets.json"; 
 	$q = urlencode(trim($query)); 
-	$formed_url ='?q='.$q; 
+	$formed_url ='?q="'.$q.'"'; 
 	if($result_type!='mixed'){$formed_url = $formed_url.'&result_type='.$result_type;} 
 	if($count!='15'){$formed_url = $formed_url.'&count='.$count;} 
-	$formed_url = $formed_url.'&include_entities=true'; 
+	$formed_url = $formed_url.'&include_entities=true';
+	$formed_url = $formed_url.'&lang=eu';
 	$headers = array( 
 		"GET /1.1/search/tweets.json".$formed_url." HTTP/1.1", 
 		"Host: api.twitter.com", 
@@ -97,8 +98,8 @@ function search_for_a_term($bearer_token, $query, $result_type='mixed', $count='
 
 function getAffinityLike($query) {
     $q = array();
-    $q['query'] = $query;
-    $q['text'] = "I love ".$query;
+    $q['query'] = urlencode($query);
+    $q['text'] = "I love ".urlencode($query);
     $data = "{\"data\":[".json_encode($q)."]}";
     echo $data;
     $result2  =array();
@@ -110,6 +111,7 @@ function getAffinityLike($query) {
 }
 
 $bearer_token = get_bearer_token(); // get the bearer token
-//print search_for_a_term($bearer_token, "\"moto g\"", "recent"); 
-getAffinityLike("moto g");
+$product = $argv[1];
+print search_for_a_term($bearer_token, $product, "recent",5000); 
+print getAffinityLike($argv[1]);
 ?>
