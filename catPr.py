@@ -1,4 +1,5 @@
 import json
+from subprocess import call
 f = open("feedfinal.csv")
 array = []
 dict = {}
@@ -25,14 +26,16 @@ f1 = open('output.txt','w')
 for key in dict:
 	
 	key1 = key.encode(encoding='UTF-8')
-	if key == 'Books':
+	if "Mobiles & Acc" in key:
 		print len(dict[key])
-	for i in range (0,len(dict[key])):
-		dict[key][i] = dict[key][i].encode(encoding='UTF-8')
+		for i in range (0,len(dict[key])):
+			call(["php", "Oauth.php",dict[key][i]])
+		#call(["date"])
+	dict[key][i] = dict[key][i].encode(encoding='UTF-8')
 	try:
 		products = ",".join(dict[key])
 		#print products
-		f1.write(key1+"-->"+products+'\n')
+		#f1.write(key1+"-->"+products+'\n')
 	except Exception as e:
 		print key
 		continue
