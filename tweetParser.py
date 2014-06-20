@@ -3,7 +3,7 @@ f = open("test.txt")
 f1 = open("parsedTweets.txt","w")
 
 text = ""
-noise_words_set = {'of', 'the', 'at', 'for', 'in'}
+noise_words_set = {}
 
 for line in f:
 	array = json.loads(line)
@@ -15,4 +15,4 @@ for line in f:
 				text.replace(" "+noise_word+" ","")
 
 		text = tweet['text'].encode(encoding = 'UTF-8')
-		f1.write(text+" "+str(tweet['retweet_count'])+" "+str(tweet['favorite_count']))
+		f1.write(text+" "+str(tweet['retweet_count'])+" "+str(tweet['favorite_count'])+"\n")
