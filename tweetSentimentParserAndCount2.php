@@ -40,7 +40,9 @@ $response = Unirest::post(
   )
 );
 
+//echo print_r($response->__get('body'),1);
 $probability = $response->__get('body')->probability;
+echo $probability->pos." ".$probability->neg;
 
 ?>
 
