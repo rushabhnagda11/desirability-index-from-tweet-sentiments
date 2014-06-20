@@ -3,7 +3,7 @@ f = open("test.txt")
 f1 = open("parsedTweets.txt","w")
 
 text = ""
-noise_words_set = {'of', 'the', 'at', 'for', 'in'}
+noise_words_set = {}
 
 for line in f:
 	array = json.loads(line)
